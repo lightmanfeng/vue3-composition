@@ -71,7 +71,24 @@ setup 函数是一个新的组件选项。作为在组件内使用 Composition A
   vue3 新加的 API，接受一个参数值并返回一个响应式且可改变的 ref 对象。ref 对象拥有一个指向内部值的单一属性 `.value`。
 
   ```
-const count = ref(0)
+  const count = ref(0)
+  ```
+
+  当使用组合式 API 时，reactive refs 和 template refs 的概念已经是统一的。为了获得对模板内元素或组件实例的引用，我们可以像往常一样在 `setup()` 中声明一个 ref 并返回它：
+
+  ```
+  const RootComponent = {
+    template: `
+    <div ref="root">123</div>
+    `,
+    setup() {
+      const root = ref(null)
+      onMounted(() => {
+        // 在渲染完成后, 这个 div DOM 会被赋值给 root ref 对象
+        console.log(root.value) // <div>123</div>
+      })
+    }
+  }
   ```
   
 ### `ref vs reactive`
